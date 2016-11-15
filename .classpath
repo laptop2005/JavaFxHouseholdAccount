@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_79"/>
+	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/UTIL/java_util/ibatis-2.3.0.677.jar/ibatis-2.3.0.677.jar"/>
+	<classpathentry kind="lib" path="C:/UTIL/java_util/JDBC/ojdbc5.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

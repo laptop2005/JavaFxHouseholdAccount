@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.*?>
+
+<BorderPane minWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <!-- TODO Add Nodes -->
+  <bottom>
+    <Pane prefHeight="50.0" prefWidth="400.0">
+      <children>
+        <Button fx:id="button_add" layoutX="181.0" layoutY="12.0" mnemonicParsing="false" text="추가" />
+        <Button fx:id="button_delete" layoutX="252.0" layoutY="12.0" mnemonicParsing="false" text="삭제" />
+        <Button fx:id="button_save" layoutX="323.0" layoutY="12.0" mnemonicParsing="false" text="저장" />
+      </children>
+    </Pane>
+  </bottom>
+  <center>
+    <Pane prefHeight="300.0" prefWidth="200.0">
+      <children>
+        <TableView fx:id="tableView_content" layoutX="0.0" layoutY="0.0" prefHeight="300.0" prefWidth="400.0" />
+      </children>
+    </Pane>
+  </center>
+  <stylesheets>
+    <URL value="@DarkTheme.css" />
+  </stylesheets>
+  <top>
+    <Pane prefHeight="50.0" prefWidth="400.0">
+      <children>
+        <Label fx:id="label_date" layoutX="14.0" layoutY="10.0" prefHeight="29.08935546875" prefWidth="372.0" style="-fx-font-size:24" text="년월일" textOverrun="ELLIPSIS">
+          <font>
+            <Font size="25.0" />
+          </font>
+        </Label>
+      </children>
+    </Pane>
+  </top>
+</BorderPane>

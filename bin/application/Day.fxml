@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.*?>
+
+<FlowPane maxHeight="80.0" maxWidth="100.0" minHeight="80.0" minWidth="100.0" prefHeight="80.0" prefWidth="100.0" style="-fx-background-color:gray" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="application.DayController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <Button id="button_date" mnemonicParsing="false" onAction="#openPopup" prefWidth="100.0" text="Button" />
+    <Label fx:id="label_inamt" prefWidth="100.0" text="입금:" textFill="#0c9900">
+      <font>
+        <Font size="11.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label fx:id="label_outamt" font="$x1" prefWidth="100.0" text="출금:" textFill="#ff3d00" />
+    <Label fx:id="label_total" font="$x1" prefWidth="100.0" text="잔액:" textFill="#0021cc" />
+  </children>
+  <stylesheets>
+    <URL value="@DarkTheme.css" />
+  </stylesheets>
+</FlowPane>

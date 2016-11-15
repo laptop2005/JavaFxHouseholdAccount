@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Household">
+	<resultMap id="Household" class="vo.HouseholdVO">
+		<result column="HOUSEHOLD_ID" property="householdId" />
+		<result column="HOUSEHOLD_DATE" property="householdDate" />
+		<result column="HOUSEHOLD_HISTORY" property="householdHistory" />
+		<result column="HOUSEHOLD_INAMT" property="householdInamt" />
+		<result column="HOUSEHOLD_OUTAMT" property="householdOutamt" />
+		<result column="HOUSEHOLD_TOTAL" property="householdTotal" />
+	</resultMap>
+	
+	<select id="selectHouseholdList" resultMap="Household">
+		SELECT
+			'' AS HOUSEHOLD_ID,
+			HOUSEHOLD_DATE,
+			'' AS HOUSEHOLD_HISTORY,
+			SUM(HOUSEHOLD_INAMT) AS HOUSEHOLD_INAMT,
+			SUM(HOUSEHOLD_OUTAMT) AS HOUSEHOLD_OUTAMT,
+			SUM(SUM(HOUSEHOLD_INAMT)-SUM(HOUSEHOLD_OUTAMT)) OVER (ORDER BY HOUSEHOLD_DATE ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS HOUSEHOLD_TOTAL
+		FROM
+			(
+			    SELECT 
+			      TO_CHAR(TO_DATE(SUBSTR(#householdDate#,0,4)||'0101', 'YYYYMMDD') + NUM-1, 'YYYYMMDD') AS HOUSEHOLD_DATE,
+			      NVL(B.HOUSEHOLD_INAMT,0) AS HOUSEHOLD_INAMT,
+			      NVL(B.HOUSEHOLD_OUTAMT,0) AS HOUSEHOLD_OUTAMT
+			    FROM 
+				    ( 
+				      SELECT ROWNUM NUM  
+				      FROM DICTIONARY 
+				      WHERE ROWNUM &lt;= LAST_DAY(TO_DATE(#householdDate#, 'YYYYMMDD')) - TO_DATE(SUBSTR(#householdDate#,0,4)||'0101', 'YYYYMMDD')  + 1 
+				    ) A
+				    LEFT OUTER JOIN HOUSEHOLD B
+				    ON
+				      TO_CHAR(TO_DATE(SUBSTR(#householdDate#,0,4)||'0101', 'YYYYMMDD') + NUM-1, 'YYYYMMDD') = B.HOUSEHOLD_DATE
+			)
+		GROUP BY 
+			HOUSEHOLD_DATE
+	</select>
+	
+	<select id="selectHousehold" resultMap="Household">
+		SELECT
+			HOUSEHOLD_ID,
+			HOUSEHOLD_DATE,
+			HOUSEHOLD_HISTORY,
+			HOUSEHOLD_INAMT,
+			HOUSEHOLD_OUTAMT,
+			'' AS HOUSEHOLD_TOTAL
+		FROM
+			HOUSEHOLD
+		WHERE
+			HOUSEHOLD_DATE = #householdDate#
+	</select>
+	
+	<insert id="insertHousehold">
+		INSERT INTO HOUSEHOLD
+		(
+			HOUSEHOLD_ID,
+			HOUSEHOLD_DATE,
+			HOUSEHOLD_HISTORY,
+			HOUSEHOLD_INAMT,
+			HOUSEHOLD_OUTAMT
+		)
+		VALUES
+		(
+			SEQ_HOUSEHOLD_ID.nextVal,
+			#householdDate#,
+			#householdHistory#,
+			#householdInamt#,
+			#householdOutamt#
+		)
+	</insert>
+	
+	<update id="updateHousehold">
+		UPDATE HOUSEHOLD
+		SET
+			HOUSEHOLD_DATE = #householdDate#,
+			HOUSEHOLD_HISTORY = #householdHistory#,
+			HOUSEHOLD_INAMT = #householdInamt#,
+			HOUSEHOLD_OUTAMT = #householdOutamt#
+		WHERE
+			HOUSEHOLD_ID = #householdId#
+	</update>
+	
+	<delete id="deleteHousehold">
+		DELETE 
+		FROM 
+			HOUSEHOLD
+		WHERE
+			HOUSEHOLD_ID = #householdId#
+	</delete>
+</sqlMap>
